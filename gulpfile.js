@@ -2,10 +2,10 @@ var browserSync = require('browser-sync').create();
 var clearFix = require('postcss-clearfix');
 var colorShort = require('postcss-color-short');
 var cssMqpacker = require('css-mqpacker');
-var cssNano = require('cssnano');
 var cssNext = require('postcss-cssnext');
 var focus = require('postcss-focus');
 var gulp = require('gulp');
+var nano = require('gulp-cssnano');
 var postcss = require('gulp-postcss');
 var precss = require('precss');
 var propertySorter = require('css-property-sorter');
@@ -13,14 +13,15 @@ var px2Rem = require('postcss-pxtorem');
 var size = require('postcss-size');
 var short = require ('postcss-short');
 var watch = require('gulp-watch');
+var uncss = require('gulp-uncss');
 
 gulp.task('default', ['server'], function() {
   gulp.watch('src/css/*.css', function(event) {
-    gulp.run('postcss');
+    gulp.run('css');
   });
 });
 
-gulp.task('postcss', function () {
+gulp.task('css', function () {
   var processors = [
     colorShort,
     focus,
@@ -31,11 +32,14 @@ gulp.task('postcss', function () {
     px2Rem,
     cssNext,
     cssMqpacker,
-    propertySorter,
-    cssNano
+    propertySorter
   ];
   return gulp.src('src/css/*.css')
     .pipe(postcss(processors))
+    .pipe(uncss({
+        html: ['dist/index.html']
+    }))
+    .pipe(nano())
     .pipe(gulp.dest('dist/css/'))
     .pipe(browserSync.stream());
 });
