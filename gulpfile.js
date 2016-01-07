@@ -15,7 +15,7 @@ var short = require ('postcss-short');
 var watch = require('gulp-watch');
 
 gulp.task('default', ['server'], function() {
-  gulp.watch('dist/*.html', function(event) {
+  gulp.watch('src/css/*.css', function(event) {
     gulp.run('postcss');
   });
 });
