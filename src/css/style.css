@@ -1,3 +1,15 @@
+/* Table of contents
+––––––––––––––––––––––––––––––––––––––––––––––––––
+
+0.0 Normalize
+1.0 Root
+1.1 Sperm
+*/
+
+
+/* 0.0 Normalize
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 body {
   margin: 0;
 }
@@ -148,8 +160,8 @@ html input[disabled] {
   cursor: default;
 }
 
-button::-moz-focus-inner,
-input::-moz-focus-inner {
+button,
+input {
   border: 0;
   padding: 0;
 }
@@ -206,4 +218,28 @@ table {
 td,
 th {
   padding: 0;
+}
+
+/* 1.0 Root
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+:root{
+  --colorBlue: #0084ff;
+  --colorGrey: #e6;
+}
+
+::selection {
+  background: var(--colorBlue);
+  color: #f;
+}
+
+body {
+  background: darkred;
+}
+
+/* 1.1 Sperm
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.sperm {
+  
 }
