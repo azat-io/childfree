@@ -12,7 +12,7 @@
     "gulp-watch": "^4.3.5",
     "postcss-clearfix": "^0.2.0",
     "postcss-color-short": "^0.2.2",
-    "postcss-cssnext": "^2.3.0",
+    "postcss-cssnext": "^2.4.0",
     "postcss-focus": "^1.0.0",
     "postcss-pxtorem": "^3.3.1",
     "postcss-short": "^1.4.0",
