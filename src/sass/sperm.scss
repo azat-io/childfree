@@ -1,0 +1,97 @@
+
+$pixel-color-map: (
+  'o': transparent,
+  'w': #fff,
+  'b': #000,
+  'g': #ddd
+);
+
+// Size of the pixels
+$pixel-size: 5px !default;
+
+$pixel-art:(
+  sperm: (
+    (o o o o o o o o o o b b b b b b b o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o)
+    (o o o o o o o b b b g g g g g g g b b b o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o)
+    (o o o o o o b g g g g g g g g g g g g g b o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o)
+    (o o o o b b g g g g g g g g g g g g g g g b b o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o)
+    (o o o b g g g g g g g g g g g g g g g g g g g b o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o)
+    (o o b w w w w w w w w w g g g g g g g g g g g g b o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o)
+    (o o b w w w w w w w w w w w w w g g g g g g g g g b o o o o o o o o b b b b b b b b b o o o o o o o o o o o o o o o o o o o)
+    (o b w w w w w w w w w w w w w w w w w w g g g g g g b o o o o o b b g g g g g g g g g b o o o o o o o o o o o o o o o o o o)
+    (o b w w w w w w w w w w w w w w w w w w w g g g g g g b b o b b g g g g g g g g g g g g b b o o o o o o o o o o o o o o o o)
+    (b w w w w w w w w w w w w w w w w w w w w g g g g g g g g b g g g g g g g g g g g g g g g g b b o o o o o o o o o o o o o o)
+    (b w w w w w w w w w w w w w w w w w w w w w w g g g g g g g g g g g g w w w w w w w g g g g g g b o o o o o o o o o o o b o)
+    (b w w w w w w w w w w w w w w w w w w w w w w w w w w g g g g g g w w b b b b b b b g g g g g g g b o o o o o o o o o b g b)
+    (b w w w w w w w w w w w w w w w w w w w w w w w w w w w w g g w w b b o o o o o o o b g g g g g g g b b o o o o o o o b g b)
+    (b w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w b o o o o o o o o o o b b g g g g g g g b o o o o b b g g b)
+    (b w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w b o o o o o o o o o o o o o b g g g g g g g b b o b g g g b o)
+    (b w w w b b w w w w w w w w w w b b w w w w w w w w w w w w b o o o o o o o o o o o o o o o b g g g g g g g g b g g g b o o)
+    (o b w w b b w w w b w w b w w w b b w w w w w w w w w w w b o o o o o o o o o o o o o o o o o b g g g g g g g g g g b o o o)
+    (o b w w w w w w w w b b w w w w w w w w w w w w w w w w b o o o o o o o o o o o o o o o o o o o b g g g g g g g b b o o o o)
+    (o o b w w w w w w w w w w w w w w w w w w w w w w w b b o o o o o o o o o o o o o o o o o o o o o b b b b b b b o o o o o o)
+    (o o b w w w w w w w w w w w w w w w w w w w w w b b o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o)
+    (o o o b w w w w w w w w w w w w w w w w w w b b o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o)
+    (o o o o b b w w w w w w w w w w w w w w b b o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o)
+    (o o o o o o b w w w w w w w w w w w w b o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o)
+    (o o o o o o o b b b w w w w w w b b b o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o)
+    (o o o o o o o o o o b b b b b b o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o)
+  )
+);
+
+@function pixelize($matrix, $size){
+    $l: length($matrix);
+    $sh: '';
+    $i: $l;
+
+    @for $i from 1 through $l{
+      $row: nth($matrix,$i); //
+
+      @for $j from 1 through length($row){
+          $item: nth($row,$j);
+
+          @if map-has-key($pixel-color-map, $item) {
+            $sh:  $sh + ($j*$size) + ' ' + ($i*$size) + ' ' + map-get($pixel-color-map, $item);
+          } @else {
+            @warn 'there is no color specified in "$pixel-color-map" for: "#{$item}"';
+          }
+
+        @if not ($j == length($row) and $i == $l) {
+          $sh: $sh + ',';
+        }
+      }
+    }
+
+    @return unquote($sh);
+}
+
+@mixin style-item($matrix, $size){
+  position: relative;
+
+  width:($size * length(nth($matrix,1)));
+  height:($size * length($matrix));
+
+  &:after{
+    content: '';
+    position: absolute;
+    top: (-$size);
+    left: (-$size);
+    width: $size;
+    height: $size;
+    box-shadow: pixelize($matrix,$size);
+  }
+}
+
+.actor {
+  list-style: none;
+  margin: 3em auto;
+  max-width: 800px;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+   @each $key, $value in $pixel-art{
+    &--#{$key}{
+      @include style-item($value, $pixel-size);
+    }
+  }
+}
