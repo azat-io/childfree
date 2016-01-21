@@ -18,7 +18,7 @@ var watch = require('gulp-watch');
 var uncss = require('gulp-uncss');
 
 gulp.task('default', ['server'], function() {
-  gulp.watch('src/css/*.css', function(event) {
+  gulp.watch('src/css/**/*.css', function(event) {
     gulp.run('css');
   });
   gulp.watch('src/sass/*.scss', function(event) {
